@@ -1,0 +1,153 @@
+# Common settings for all boards
+
+esphome:
+  name: ${name}
+  comment: "PiggyMeter IEC62056-21"
+
+esp32:
+  variant: ${variant}
+  board: ${board}
+  framework:
+    type: esp-idf
+
+logger:
+  level: DEBUG
+  # level: INFO
+
+wifi:
+  networks:
+    - ssid: !secret wifi_ssid
+      password: !secret wifi_pass
+  # FIXME remove for final version
+  domain: .lan
+  
+api:
+  encryption:
+    key: !secret api_key
+
+ota:
+  password: !secret ota_pass
+
+external_components:
+    # IEC62056-21 component
+  - source: github://aquaticus/esphome-iec62056
+
+uart:
+  - id: uart_meter
+    rx_pin: ${rx_pin}
+    tx_pin: ${tx_pin}
+    baud_rate: 300
+    data_bits: 7
+    parity: EVEN
+    stop_bits: 1
+
+switch:
+  - platform: gpio
+    pin: ${led_pin}
+    name: Internal LED
+    id: led_switch
+    internal: True
+
+  - platform: iec62056
+    name: 'Readout Trigger'
+    id: 'readout_trigger'
+
+binary_sensor:
+  - platform: iec62056
+    id: meter_status
+    name: Meter Connection Status
+    on_press:
+      then:
+        - switch.turn_on: led_switch
+    on_release:
+      then:
+        - switch.turn_off: led_switch
+
+
+iec62056:
+  update_interval: 60s
+  baud_rate_max: 9600
+
+# Modify the list and OBIS codes if needed
+# Doc:  https://aquaticus.info/iec62056.html
+
+sensor:
+  - platform: iec62056
+    obis: 1-0:15.8.0
+    name: Absolute active energy total
+    unit_of_measurement: kWh
+    accuracy_decimals: 3
+    device_class: energy
+    state_class: total_increasing
+
+  - platform: iec62056
+    name: Instantaneous current in phase L1
+    obis: 1-0:31.7.0
+    unit_of_measurement: A
+    accuracy_decimals: 2
+    device_class: current
+    state_class: measurement
+
+  - platform: iec62056
+    name: Instantaneous current in phase L2
+    obis: 1-0:51.7.0
+    unit_of_measurement: A
+    accuracy_decimals: 2
+    device_class: current
+    state_class: measurement
+
+  - platform: iec62056
+    name: Instantaneous current in phase L3
+    obis: 1-0:71.7.0
+    unit_of_measurement: A
+    accuracy_decimals: 2
+    device_class: current
+    state_class: measurement
+
+  - platform: iec62056
+    name: Instantaneous voltage in phase L1
+    obis: 1-0:32.7.0
+    unit_of_measurement: V
+    accuracy_decimals: 1
+    device_class: voltage
+    state_class: measurement
+
+  - platform: iec62056
+    name: Instantaneous voltage in phase L2
+    obis: 1-0:52.7.0
+    unit_of_measurement: V
+    accuracy_decimals: 1
+    device_class: voltage
+    state_class: measurement
+
+  - platform: iec62056
+    name: Instantaneous voltage in phase L3
+    obis: 1-0:72.7.0
+    unit_of_measurement: V
+    accuracy_decimals: 1
+    device_class: voltage
+    state_class: measurement
+
+  - platform: iec62056
+    name: Positive active instantaneous power
+    obis: 1-0:1.7.0
+    unit_of_measurement: kW
+    accuracy_decimals: 3
+    device_class: energy
+    state_class: measurement
+
+  - platform: iec62056
+    name: Absolute active instantaneous power
+    obis: 1-0:15.7.0
+    unit_of_measurement: kW
+    accuracy_decimals: 3
+    device_class: energy
+    state_class: measurement
+
+  - platform: iec62056
+    name: Absolute active maximum demand total
+    obis: 1-0:15.6.0
+    unit_of_measurement: kW
+    accuracy_decimals: 3
+    device_class: energy
+    state_class: measurement

@@ -1,0 +1,25 @@
+# PiggyMeter configuration for IEC62056-21 meters
+# Board: Lolin S2 mini
+# http://aquaticus.info/piggymeter.html
+#
+# Modify the list of sensors to match the reader
+# See https://aquaticus.info/iec62056.html
+
+# Create secrets.yaml file with passwords
+# api_key: "<API KEY>"
+# ota_pass: "<OTA PASS>"
+# wifi_ssid: "<WIFI SSID>"
+# wifi_pass: "<WIFI PASS>"
+
+# Unique settings
+
+substitutions:
+  name: piggymeter-s2-iec62056-21
+  variant: esp32s2
+  board: lolin_s2_mini
+  tx_pin: GPIO12
+  rx_pin: GPIO11
+  led_pin: GPIO15
+
+# Include common configuration
+<<: !include piggymeter-common.yaml
