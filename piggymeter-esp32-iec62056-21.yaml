@@ -1,0 +1,25 @@
+# PiggyMeter configuration for IEC62056-21 meters
+# Board: Wemos ESP32 D1 mini
+# http://aquaticus.info/piggymeter.html
+#
+# Modify the list of sensors to match the reader
+# See https://aquaticus.info/iec62056.html
+
+# Create secrets.yaml file with passwords
+# api_key: "<API KEY>"
+# ota_pass: "<OTA PASS>"
+# wifi_ssid: "<WIFI SSID>"
+# wifi_pass: "<WIFI PASS>"
+
+# Unique settings
+
+substitutions:
+  name: piggymeter-esp32-iec62056-21
+  variant: esp32
+  board: wemos_d1_mini32
+  tx_pin: GPIO5
+  rx_pin: GPIO23
+  led_pin: GPIO2
+
+# Include common configuration
+<<: !include piggymeter-common.yaml
