@@ -1,0 +1,25 @@
+# PiggyMeter configuration for IEC62056-21 meters
+# Board: Lolin C3 mini
+# http://aquaticus.info/piggymeter.html
+#
+# Modify the list of sensors to match the reader
+# See https://aquaticus.info/iec62056.html
+
+# Create secrets.yaml file with passwords
+# api_key: "<API KEY>"
+# ota_pass: "<OTA PASS>"
+# wifi_ssid: "<WIFI SSID>"
+# wifi_pass: "<WIFI PASS>"
+
+# Unique settings
+
+substitutions:
+  name: piggymeter-c3-iec62056-21
+  variant: esp32c3
+  board: lolin_c3_mini
+  tx_pin: GPIO5
+  rx_pin: GPIO4
+  led_pin: GPIO7
+
+# Include common configuration
+<<: !include piggymeter-common.yaml
