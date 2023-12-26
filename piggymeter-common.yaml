@@ -18,8 +18,8 @@ wifi:
   networks:
     - ssid: !secret wifi_ssid
       password: !secret wifi_pass
-  # FIXME remove for final version
-  domain: .lan
+  # Optional domain
+  # domain: .lan
   
 api:
   encryption:
