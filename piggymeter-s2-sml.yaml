@@ -1,0 +1,71 @@
+# Configuration for SML meters
+# for ESPHome version 2024.6.1
+
+substitutions:
+  name: piggymeter-s2-sml
+  variant: esp32s2
+  board: lolin_s2_mini
+  tx_pin: GPIO12
+  rx_pin: GPIO11
+
+esphome:
+  name: ${name}
+  comment: "PiggyMeter SML"
+
+esp32:
+  variant: ${variant}
+  board: ${board}
+  framework:
+    type: esp-idf
+
+logger:
+  level: DEBUG
+  # level: INFO
+
+wifi:
+  networks:
+    - ssid: !secret wifi_ssid
+      password: !secret wifi_pass
+  # Optional domain
+  # domain: .lan
+  
+api:
+  encryption:
+    key: !secret api_key
+
+ota:
+  password: !secret ota_pass
+  platform: esphome
+
+
+# Check what UART settings are needed for your meter
+# Usually 9600 8N1 or 9600 7E1
+uart:
+  - id: sml_uart
+    rx_pin: ${rx_pin}
+    tx_pin: ${tx_pin}
+    baud_rate: 9600
+    data_bits: 7
+    parity: EVEN
+    stop_bits: 1
+
+sml:
+  id: sml_meter
+  uart_id: sml_uart
+
+# Example sensor for total energy
+sensor:
+  - platform: sml
+    name: "Total energy"
+    sml_id: sml_meter
+    server_id: "0123456789abcdef"
+    obis_code: "1-0:1.8.0"
+    unit_of_measurement: kWh
+    accuracy_decimals: 1
+    device_class: energy
+    state_class: total_increasing
+    filters:
+      - multiply: 0.0001
+
+# See https://esphome.io/components/sml.html
+# for more information on how to configure sensors
