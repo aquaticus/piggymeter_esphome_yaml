@@ -1,0 +1,52 @@
+# The following configuration is for the Iskra ME162 electric meter.
+# Replace Sensor section with one below.
+
+sensor:
+  - platform: iec62056
+    obis: 1.8.0
+    name: Positive active energy total
+    unit_of_measurement: kWh
+    accuracy_decimals: 3
+    device_class: energy
+    state_class: total_increasing
+
+  - platform: iec62056
+    obis: 1.8.1
+    name: Positive active energy total in tariff 1
+    unit_of_measurement: kWh
+    accuracy_decimals: 3
+    device_class: energy
+    state_class: total_increasing
+
+  - platform: iec62056
+    obis: 1.8.2
+    name: Positive active energy total in tariff 2
+    unit_of_measurement: kWh
+    accuracy_decimals: 3
+    device_class: energy
+    state_class: total_increasing
+
+  - platform: iec62056
+    obis: 2.8.0
+    name: Negative active energy total
+    unit_of_measurement: kWh
+    accuracy_decimals: 3
+    device_class: energy
+    state_class: total_increasing
+
+  - platform: iec62056
+    obis: 2.8.1
+    name: Negative active energy total in tariff 1
+    unit_of_measurement: kWh
+    accuracy_decimals: 3
+    device_class: energy
+    state_class: total_increasing
+
+  - platform: iec62056
+    obis: 2.8.2
+    name: Negative  active energy total in tariff 2
+    unit_of_measurement: kWh
+    accuracy_decimals: 3
+    device_class: energy
+    state_class: total_increasing
+
